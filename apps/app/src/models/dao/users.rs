@@ -12,6 +12,7 @@ use serde::{Deserialize, Serialize};
 pub struct User {
     pub id: i32,
     pub name: String,
+    pub unionid: String,
     pub openid: String,
     pub derive: String,
     pub blank: bool,
@@ -21,6 +22,7 @@ pub struct User {
 #[diesel(table_name = users)]
 pub struct CreateUser {
     pub name: String,
+    pub unionid: String,
     pub openid: String,
     pub derive: String,
 }
@@ -42,6 +44,7 @@ impl UserEntity {
             .query(|mut conn| {
                 let new_user = CreateUser {
                     name: "".to_string(),
+                    unionid: "default".to_string(),
                     openid,
                     derive: "".to_string(),
                 };
