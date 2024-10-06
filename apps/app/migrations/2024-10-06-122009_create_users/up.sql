@@ -1,0 +1,8 @@
+-- Your SQL goes here
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  openid VARCHAR NOT NULL,
+  name VARCHAR NOT NULL,
+  derive VARCHAR NOT NULL,
+  blank BOOLEAN NOT NULL DEFAULT FALSE
+);

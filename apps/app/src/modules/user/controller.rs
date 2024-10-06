@@ -1,9 +1,12 @@
-use std::collections::HashMap;
-
-use nidrs::externs::axum::extract::Query;
 use nidrs::macros::{controller, get};
-use nidrs::{AppResult, Inject};
+use nidrs::openapi::api;
+use nidrs::{post, AppResult, Inject};
+use nidrs_extern::axum::Json;
+use nidrs_macro::meta;
 
+use crate::models::doo::users::{CreateUser, User};
+
+use super::dto::LoginDto;
 use super::service::UserService;
 
 #[controller("/user")]
@@ -12,12 +15,10 @@ pub struct UserController {
 }
 
 impl UserController {
-    #[get("/hello")]
-    pub async fn get_hello_world(
-        &self,
-        Query(q): Query<HashMap<String, String>>,
-    ) -> AppResult<String> {
-        println!("Query {:?}", q);
-        Ok(self.user_service.extract().get_hello_world2())
+    #[api]
+    #[post("/register")]
+    pub async fn register(&self, dto: Json<LoginDto>) -> AppResult<Json<User>> {
+        let user = self.user_service.login(dto.openid.to_owned()).await?;
+        return Ok(Json(user));
     }
 }

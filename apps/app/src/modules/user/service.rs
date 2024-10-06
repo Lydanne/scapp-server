@@ -1,24 +1,20 @@
 use std::sync::{Arc, Mutex};
 
-use nidrs::Inject;
 use nidrs::macros::injectable;
+use nidrs::{AppResult, Inject};
 
 use crate::app::service::AppService;
+use crate::models::doo::users::{CreateUser, User, UserEntity};
 
 #[injectable()]
 pub struct UserService {
-    app_service: Inject<AppService>,
-    count: Arc<Mutex<i32>>,
+    user_entity: Inject<UserEntity>,
 }
 
 impl UserService {
-    pub fn get_hello_world(&self) -> String {
-        self.app_service.extract().get_hello_world2()
-    }
-
-    pub fn get_hello_world2(&self) -> String {
-        let mut count = self.count.lock().unwrap();
-        *count += 1;
-        format!("Hello, World! {}", count)
+    pub async fn login(&self, openid: String) -> AppResult<User> {
+        let res = self.user_entity.create(openid.to_string()).await?;
+        let user = self.user_entity.find_by_openid(openid).await?;
+        return Ok(user);
     }
 }
