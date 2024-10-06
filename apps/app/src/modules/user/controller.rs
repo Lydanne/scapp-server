@@ -4,7 +4,7 @@ use nidrs::{post, AppResult, Inject};
 use nidrs_extern::axum::Json;
 use nidrs_macro::meta;
 
-use crate::models::doo::users::{CreateUser, User};
+use crate::models::dao::users::{CreateUser, User};
 
 use super::dto::LoginDto;
 use super::service::UserService;

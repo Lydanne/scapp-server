@@ -4,7 +4,7 @@ use nidrs::macros::injectable;
 use nidrs::{AppResult, Inject};
 
 use crate::app::service::AppService;
-use crate::models::doo::users::{CreateUser, User, UserEntity};
+use crate::models::dao::users::{CreateUser, User, UserEntity};
 
 #[injectable()]
 pub struct UserService {

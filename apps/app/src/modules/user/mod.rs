@@ -4,7 +4,7 @@ pub mod controller;
 pub mod dto;
 pub mod service;
 
-use crate::models::doo::users::UserEntity;
+use crate::models::dao::users::UserEntity;
 use controller::UserController;
 use service::UserService;
 
