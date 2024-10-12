@@ -18,7 +18,7 @@ CREATE TABLE users_extra (
   id SERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL,
   first_launch_path VARCHAR NOT NULL,
-  first_launch_scene VARCHAR NOT NULL,
+  first_launch_scene VARCHAR NOT NULL
 );
 
 CREATE TABLE rooms (
@@ -51,5 +51,5 @@ CREATE TABLE downlogs (
   resource_id INTEGER NOT NULL,
   user_id INTEGER NOT NULL,
   status INTEGER NOT NULL DEFAULT 0, -- 0: downloading, 1: downloaded
-  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );

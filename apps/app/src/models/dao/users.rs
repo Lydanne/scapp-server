@@ -35,7 +35,11 @@ pub struct UserEntity {
 impl UserEntity {
     pub async fn all(&self) -> AppResult<Vec<User>> {
         self.pool
-            .query(|mut conn| users::table.load::<User>(&mut conn))
+            .query(|mut conn| {
+                users::table
+                    .select(User::as_select())
+                    .load::<User>(&mut conn)
+            })
             .await
     }
 
@@ -68,7 +72,12 @@ impl UserEntity {
 
     pub async fn find_by_id(&self, id: i32) -> AppResult<User> {
         self.pool
-            .query(move |mut conn| users::table.find(id).first::<User>(&mut conn))
+            .query(move |mut conn| {
+                users::table
+                    .find(id)
+                    .select(User::as_select())
+                    .first::<User>(&mut conn)
+            })
             .await
     }
 
@@ -77,6 +86,7 @@ impl UserEntity {
             .query(move |mut conn| {
                 users::table
                     .filter(users::openid.eq(openid))
+                    .select(User::as_select())
                     .first::<User>(&mut conn)
             })
             .await
